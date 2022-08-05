@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController as ConCon;
 use App\Http\Controllers\HotelController as HotCon;
+use App\Http\Controllers\OrderController as OrdCon;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\HotelController as HotCon;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -40,3 +41,12 @@ Route::get('/hotels/edit/{id}', [HotCon::class, 'edit'])->name('hotels-edit')->m
 Route::put('/hotels/{hotel}', [HotCon::class, 'update'])->name('hotels-update')->middleware('role:admin'); //update request
 Route::delete('/hotels/{hotel}', [HotCon::class, 'destroy'])->name('hotels-delete')->middleware('role:admin'); //delete
 // Route::get('/hotels/show/{id}', [HotCon::class, 'show'])->name('hotels-show')->middleware('role:user'); //display entry page
+
+//orders
+Route::get('/orders', [OrdCon::class, 'index'])->name('orders-index')->middleware('role:user'); //index / list
+Route::get('/orders/create', [OrdCon::class, 'create'])->name('orders-create')->middleware('role:admin'); //creation page
+Route::post('/orders', [OrdCon::class, 'store'])->name('orders-store')->middleware('role:admin'); //creation request
+Route::get('/orders/edit/{id}', [OrdCon::class, 'edit'])->name('orders-edit')->middleware('role:admin'); //edit page
+Route::put('/orders/{order}', [OrdCon::class, 'update'])->name('orders-update')->middleware('role:admin'); //update request
+Route::delete('/orders/{order}', [OrdCon::class, 'destroy'])->name('orders-delete')->middleware('role:admin'); //delete
+// Route::get('/orders/show/{id}', [OrdCon::class, 'show'])->name('orders-show')->middleware('role:user'); //display entry page
